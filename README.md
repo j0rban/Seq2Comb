@@ -1,8 +1,12 @@
 # Seq2Comb
+---
 Converts sequential .bench files to combinational
+
 Jordan Maynard
+
 2022
 
+---
 
 Usage:
 
@@ -19,3 +23,5 @@ Usage:
 - Enter the name of the sequential benchmark file without '.bench'     ex) for s27.bench enter 's27'
 
 - Navigate to the subfolder 'combinational' to find your converted benchmark!
+
+---
