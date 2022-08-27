@@ -57,6 +57,7 @@ node::node(string i, bool g, string t, vector<string> fi, vector<string> fo){
 node node::parse_line(string l){
     int in, out, comment, openpar, closepar, eq, comma;
     string fanin_str, fanins_parsed;
+    
     in = l.find("INPUT");
     out = l.find("OUTPUT");
     openpar = l.find("(");

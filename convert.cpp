@@ -2,11 +2,7 @@
 #include <filesystem>
 #include <fstream>
 #include <string>
-#include <array>
-#include <vector>
 #include <stdlib.h>
-#include <time.h>
-#include <math.h>
 #include "circuit.h"
 
 using namespace std;
@@ -24,15 +20,15 @@ void create_subcircuits(){
 
         while (getline(og,line)){
 
-            if (line == "") continue;       //skip blank line
+            if (line.length() < 2) continue;       //skip blank line
 
             node n;
+            n.parse_line(line);
             int input,output,comment,dff;
 
             //check if line is input
             input = line.find("INPUT");
             if(input != string::npos){
-                n.parse_line(line);
                 inputs_c.add_node(n);
                 inCount++;
 
@@ -42,7 +38,6 @@ void create_subcircuits(){
             //check if line is output
             output = line.find("OUTPUT");
             if(output != string::npos){  
-                n.parse_line(line);
                 outputs_c.add_node(n);
                 outCount++;
 
@@ -52,8 +47,6 @@ void create_subcircuits(){
             //check if line is dff
             dff = line.find("DFF(");
             if(dff != string::npos){
-                n.parse_line(line);
-
                 node scan = node(n.id, false, "INPUT");
                 scanins_c.add_node(scan);
                 scan = node(n.fanins[0], false, "OUTPUT");
@@ -67,12 +60,14 @@ void create_subcircuits(){
             //check if line is other
             comment = line.find("#");
             if((input == string::npos) && (output == string::npos) && (comment == string::npos)){
-                n.parse_line(line);
                 gates_c.add_node(n);
                 gateCount++;
             }
             
         }
+        
+        gates_c.populate_fanouts();
+        
         cout << "# Inputs: " << inCount << endl;
         cout << "# Outputs: " << outCount << endl;
         cout << "# DFFs: " << dffCount << endl;
